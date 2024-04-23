@@ -1,0 +1,7 @@
+ hello everyone 
+
+ its a new file 
+
+
+ cat says meow
+ 
