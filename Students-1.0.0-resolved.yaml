@@ -1,0 +1,343 @@
+---
+openapi: 3.0.0
+info:
+  title: Student Details
+  description: The API for BRB college student enrolment
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/SWATHIJONNADAN/student/1.0.0
+  description: SwaggerHub API Auto Mockingf
+paths:
+  /students/{stuid}:
+    get:
+      tags:
+      - Students
+      description: returns all registered students
+      operationId: getStudents
+      parameters:
+      - name: Accept
+        in: header
+        description: Indicates the acceptable response format
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        description: OAuth 2.0 Authorization Token for accessing the API
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: Bearer 5jLZK4N0Q3617oGFEl1tB6nPG79F
+      - name: Content-Type
+        in: header
+        description: The content type of the payload.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: application/json
+      - name: Correlation-ID
+        in: header
+        description: "Unique ID assigned to each API call by the client, allows to trace full path of interactions through multiple sub-systems"
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: 98903caf-ff68-401d-916c-0294538901ea
+      - name: stuid
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: "1001"
+      responses:
+        "200":
+          description: All the students
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentResponse'
+  /add-students:
+    post:
+      tags:
+      - Students
+      description: enroll new students
+      operationId: newStudents
+      parameters:
+      - name: Accept
+        in: header
+        description: Indicates the acceptable response format
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        description: OAuth 2.0 Authorization Token for accessing the API
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: Bearer 5jLZK4N0Q3617oGFEl1tB6nPG79F
+      - name: Content-Type
+        in: header
+        description: The content type of the payload.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: application/json
+      - name: Correlation-ID
+        in: header
+        description: "Unique ID assigned to each API call by the client, allows to trace full path of interactions through multiple sub-systems"
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: 98903caf-ff68-401d-916c-0294538901ea
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentRequest'
+      responses:
+        "200":
+          description: student created
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
+            Date:
+              $ref: '#/components/headers/Date'
+            Location:
+              $ref: '#/components/headers/Location'
+            Version:
+              $ref: '#/components/headers/Version'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentResponse'
+components:
+  schemas:
+    StudentRequest:
+      type: array
+      items:
+        $ref: '#/components/schemas/StudentRequest_inner'
+    Address:
+      type: object
+      properties:
+        addressLine1:
+          type: string
+          example: 883 Subhash Ln
+        addressLine2:
+          type: string
+          example: main street
+        state:
+          type: string
+          example: telangana
+        country:
+          type: string
+          example: India
+    Address1:
+      type: object
+      properties:
+        addressLine1:
+          type: string
+          example: 7703 Haveli Ln
+        addressLine2:
+          type: string
+          example: 2nd street
+        state:
+          type: string
+          example: telangana
+        country:
+          type: string
+          example: India
+    StudentResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/StudentResponse_inner'
+    StudentRequest_inner:
+      type: object
+      properties:
+        stuid:
+          type: integer
+          example: 1001
+        firstName:
+          type: string
+          example: Ravi
+        lastName:
+          type: string
+          example: Singh
+        dob:
+          type: string
+          description: "date of birth , format MM/DD/YYYY"
+          example: 05/06/1994
+        age:
+          type: integer
+          example: 30
+        subject:
+          type: string
+          example: Science
+          enum:
+          - Science
+          - Arts
+        address:
+          $ref: '#/components/schemas/Address'
+        stuid1:
+          type: integer
+          example: 1002
+        firstName1:
+          type: string
+          example: Krishna
+        lastName1:
+          type: string
+          example: Rao
+        dob1:
+          type: string
+          description: "date of birth , format MM/DD/YYYY"
+          example: 07/09/1989
+        age1:
+          type: integer
+          example: 35
+        subject1:
+          type: string
+          example: Arts
+          enum:
+          - Science
+          - Arts
+        address1:
+          $ref: '#/components/schemas/Address1'
+    StudentResponse_inner:
+      type: object
+      properties:
+        accountStatus:
+          type: string
+          description: student admission status
+          example: Enrolled
+          enum:
+          - Enrolled
+          - Waiting
+          - Admission Denied
+        stuid:
+          type: integer
+          example: 1001
+        firstName:
+          type: string
+          example: Ravi
+        lastName:
+          type: string
+          example: Singh
+        accountStatus1:
+          type: string
+          description: student admission status
+          example: Waiting
+          enum:
+          - Enrolled
+          - Waiting
+          - Admission Denied
+        stuid1:
+          type: integer
+          example: 1002
+        firstName1:
+          type: string
+          example: krishna
+        lastName1:
+          type: string
+          example: rao
+  parameters:
+    Accept:
+      name: Accept
+      in: header
+      description: Indicates the acceptable response format
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+      example: application/json
+    Authorization:
+      name: Authorization
+      in: header
+      description: OAuth 2.0 Authorization Token for accessing the API
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+      example: Bearer 5jLZK4N0Q3617oGFEl1tB6nPG79F
+    Content-Type:
+      name: Content-Type
+      in: header
+      description: The content type of the payload.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+      example: application/json
+    Correlation-ID:
+      name: Correlation-ID
+      in: header
+      description: "Unique ID assigned to each API call by the client, allows to trace full path of interactions through multiple sub-systems"
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+      example: 98903caf-ff68-401d-916c-0294538901ea
+  headers:
+    Correlation-ID:
+      $ref: '#/components/headers/Correlation-ID'
+    Content-Type:
+      $ref: '#/components/headers/Content-Type'
+    Date:
+      description: Date and time information for response
+      required: false
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: date-time
+    Location:
+      description: Provides information about the location of a newly created resource:- absolute URL as a link to the created resource
+      required: false
+      style: simple
+      explode: false
+      schema:
+        type: string
+      example: "https://brbcollege/enrollemnt/v1/students/{stu}"
+    Version:
+      description: API version code made up of major.minor.patch version
+      required: false
+      style: simple
+      explode: false
+      schema:
+        type: string
+      example: v1.0.0
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://example.com/oauth/authorize
+          tokenUrl: https://example.com/oauth/token
+          scopes:
+            read: Grants read access
+            write: Grants write access
+            admin: Grants read and write access to administrative information
